@@ -13,13 +13,8 @@ public class PackLogListener implements LogListener {
     }
 
     @Override
-    public void debug(@NotNull String s) {
+    public void debugUnchecked(@NotNull String s) {
         this.logger.debug(s);
-    }
-
-    @Override
-    public void debugUnchecked(@NotNull String message) {
-
     }
 
     @Override
