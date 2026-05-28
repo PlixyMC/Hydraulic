@@ -55,7 +55,6 @@ public class PackManager {
             // Fabric
             "geyser-fabric",
             "fabric-permissions-api-v0",
-            "forgeconfigapiport",
 
             // NeoForge
             "geyser-neoforge",
