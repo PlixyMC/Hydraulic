@@ -55,6 +55,7 @@ public class PackManager {
             // Fabric
             "geyser-fabric",
             "fabric-permissions-api-v0",
+            "forgeconfigapiport",
 
             // NeoForge
             "geyser-neoforge",
@@ -92,13 +93,25 @@ public class PackManager {
         final Collection<ModInfo> mods = this.hydraulic.mods();
         final Map<String, List<ResourcePack>> modPacks = Maps.newHashMapWithExpectedSize(mods.size());
         for (final ModInfo mod : mods) {
-            modPacks.put(
-                mod.id(),
-                mod.roots()
-                    .stream()
-                    .map(path -> MinecraftResourcePackReader.minecraft().read(NioDirectoryFileTreeReader.read(path)))
-                    .toList()
-            );
+            try {
+                modPacks.put(
+                    mod.id(),
+                    mod.roots()
+                        .stream()
+                        .map(path -> {
+                            try {
+                                return MinecraftResourcePackReader.minecraft().read(NioDirectoryFileTreeReader.read(path));
+                            } catch (Exception e) {
+                                LOGGER.error("Failed to read resource pack from mod {} at path {}: {}", mod.id(), path, e.getMessage());
+                                return null;
+                            }
+                        })
+                        .filter(pack -> pack != null)
+                        .toList()
+                );
+            } catch (Exception e) {
+                LOGGER.error("Failed to process mod {}: {}", mod.id(), e.getMessage(), e);
+            }
         }
 
         try {
