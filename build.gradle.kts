@@ -2,7 +2,7 @@ plugins {
     id("hydraulic.build-logic")
 }
 
-defaultTasks(":fabric:build")
+
 
 val platforms = setOf(
     projects.fabric,
