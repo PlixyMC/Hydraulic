@@ -2,8 +2,6 @@ plugins {
     id("hydraulic.build-logic")
 }
 
-
-
 val platforms = setOf(
     projects.fabric,
     // projects.neoforge,
